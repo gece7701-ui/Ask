@@ -194,12 +194,18 @@
       margin-top: 10px;
     }
 
-    /* SVG Papatya Tasarımı */
+    /* SVG Papatya Tasarımı (Katman Düzenlemesi Yapıldı) */
     .daisy-container {
       width: 140px;
       height: 140px;
       margin: 15px auto;
       cursor: pointer;
+    }
+
+    .center-flower {
+      fill: #ffb74d;
+      stroke: #ffa726;
+      stroke-width: 2;
     }
 
     .petal {
@@ -213,12 +219,6 @@
     .petal-hidden {
       opacity: 0;
       transform: scale(0.5);
-    }
-
-    .center-flower {
-      fill: #ffb74d;
-      stroke: #ffa726;
-      stroke-width: 2;
     }
 
     #daisy-result {
@@ -422,7 +422,8 @@
   }
 
   function startTimer() {
-    const startDate = new Date("2026-08-27T22:05:00"); 
+    // Doğru başlangıç tarihi: 28 Ağustos 2026, 22:05:00
+    const startDate = new Date("2026-08-28T22:05:00"); 
     setInterval(() => {
       const now = new Date();
       const diff = now - startDate;
@@ -507,5 +508,4 @@
 </script>
 
 </body>
-  </html>
-  
+</html>
