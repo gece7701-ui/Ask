@@ -1,128 +1,214 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Aşkımızın Rotası 💖</title>
-  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #2b0914 0%, #0d0408 100%);
-      color: #fff;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      min-height: 100vh;
-      padding: 20px;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bizim Dünya Turumuz ❤️</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-    /* Şifre Ekranı (Login) */
-    .login-overlay {
-      position: fixed;
-      top: 0; left: 0; width: 100%; height: 100%;
-      background: #140309;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 2000;
-    }
-    .login-box {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid #ff4d6d;
-      padding: 30px;
-      border-radius: 20px;
-      text-align: center;
-      box-shadow: 0 10px 30px rgba(255, 77, 109, 0.2);
-      max-width: 350px;
-      width: 90%;
-    }
-    .login-box h2 { color: #ff4d6d; margin-bottom: 10px; font-size: 1.5rem; }
-    .login-box p { font-size: 0.9rem; color: #ffb3c1; margin-bottom: 20px; }
-    .login-box input {
-      width: 100%;
-      padding: 12px;
-      border-radius: 10px;
-      border: 1px solid #ff4d6d;
-      background: #2b0914;
-      color: #fff;
-      font-size: 1.2rem;
-      text-align: center;
-      outline: none;
-      letter-spacing: 4px;
-      margin-bottom: 15px;
-    }
-    .login-box button {
-      width: 100%;
-      padding: 12px;
-      border-radius: 10px;
-      border: none;
-      background: #ff4d6d;
-      color: #fff;
-      font-weight: bold;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-    .login-box button:hover { background: #ff758f; }
-    .error-msg { color: #ff4d4d; font-size: 0.85rem; margin-top: 10px; display: none; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #0f172a;
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
 
-    /* Ana Sayfa Başlıkları */
-    h1 { margin-top: 10px; font-size: 2.2rem; text-align: center; color: #ff4d6d; text-shadow: 0 0 10px rgba(255,77,109,0.5); }
-    p.subtitle { margin-bottom: 30px; color: #ffb3c1; font-size: 1rem; text-align: center; }
+        /* ŞİFRE EKRANI */
+        #login-screen {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 30px 20px;
+            border-radius: 20px;
+            text-align: center;
+            width: 100%;
+            max-width: 350px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+        }
 
-    /* Destinasyon Kartları */
-    .map-container {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-      justify-content: center;
-      max-width: 900px;
-      width: 100%;
-      margin-bottom: 30px;
-    }
-    .destination-card {
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid #ff4d6d44;
-      border-radius: 16px;
-      padding: 20px;
-      width: 200px;
-      text-align: center;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-    .destination-card:hover {
-      transform: translateY(-8px) scale(1.02);
-      border-color: #ff4d6d;
-      box-shadow: 0 10px 25px rgba(255, 77, 109, 0.3);
-      background: rgba(255, 77, 109, 0.1);
-    }
-    .destination-card span { font-size: 2.8rem; display: block; margin-bottom: 10px; }
-    .destination-card h3 { color: #fff; font-size: 1.2rem; }
+        #login-screen h2 {
+            color: #ff758c;
+            margin-bottom: 15px;
+        }
 
-    /* Modal / Simülasyon Ekranı */
-    .modal {
-      display: none;
-      position: fixed;
-      top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(15, 3, 7, 0.9);
-      backdrop-filter: blur(8px);
-      z-index: 1000;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
-    }
-    .modal-content {
-      background: #1f0710;
-      border: 1px solid #ff4d6d;
-      border-radius: 20px;
-      max-width: 650px;
-      width: 100%;
-      max-height: 90vh;
-      overflow-y: auto;
-      position: relative;
-      padding: 25px;
-      box-shadow: 0 0 30px rgba(255, 77, 109, 0.4);
-    }
-    .close-btn {
-      position: absolute;
+        #login-screen p {
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+            color: #ddd;
+        }
+
+        input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            border-radius: 20px;
+            border: none;
+            text-align: center;
+            font-size: 1.1rem;
+            outline: none;
+            margin-bottom: 15px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            border-radius: 20px;
+            border: none;
+            background: linear-gradient(135deg, #ff416c, #ff4b2b);
+            color: white;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        .error-msg {
+            color: #ff4d4d;
+            margin-top: 15px;
+            font-size: 0.85rem;
+            display: none;
+        }
+
+        /* İÇERİK EKRANI */
+        #main-content {
+            display: none;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        header h1 {
+            color: #ff758c;
+            font-size: 1.8rem;
+            margin-bottom: 8px;
+        }
+
+        .destinations {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+        }
+
+        .card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+
+        .card-content {
+            padding: 15px;
+        }
+
+        .card-content h3 {
+            color: #ff758c;
+            margin-bottom: 8px;
+        }
+
+        .card-content p {
+            font-size: 0.9rem;
+            color: #ccc;
+            line-height: 1.4;
+        }
+
+        .heart {
+            position: fixed;
+            font-size: 1.5rem;
+            animation: float 5s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh); opacity: 1; }
+            100% { transform: translateY(-10vh); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="login-screen">
+        <h2>❤️ Özel Giriş ❤️</h2>
+        <p>Aşkım, seninle çıkacağımız tura hoş geldin! Şifreyi gir ve başlasın.</p>
+        <input type="password" id="password-input" placeholder="Şifre" maxlength="4">
+        <button onclick="checkPassword()">Giriş Yap</button>
+        <div id="error-message" class="error-msg">Hatalı şifre Birtanem! ❤️</div>
+    </div>
+
+    <div id="main-content">
+        <header>
+            <h1>Hayallerimizdeki Rota ✈️</h1>
+            <p>Şimdilik ekran başında, çok yakında yan yana...</p>
+        </header>
+
+        <div class="destinations">
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1530122037265-a5f1f91d3b99?auto=format&fit=crop&w=600&q=80" alt="İsviçre">
+                <div class="card-content">
+                    <h3>İsviçre - Alp Dağları 🏔️</h3>
+                    <p>Seninle o ahşap dağ evinde, kar yağışını izlerken sıcak çikolatamızı yudumlayacağımız günlerin simülasyonu...</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1514282401047-d79a71a590e8?auto=format&fit=crop&w=600&q=80" alt="Maldivler">
+                <div class="card-content">
+                    <h3>Maldivler 🏖️</h3>
+                    <p>Turkuaz deniz, masmavi bir gökyüzü ve sahil boyunca el ele yürüyeceğimiz o eşsiz anlar...</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1584646098378-0874589d76b1?auto=format&fit=crop&w=600&q=80" alt="Romanya">
+                <div class="card-content">
+                    <h3>Romanya - Bran Şatosu 🏰</h3>
+                    <p>Gizemli ve masalsı sokaklarda, tarih kokan şatoların arasında birlikte kaybolacağımız rotamız...</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1523482580672-f109ba8cb9be?auto=format&fit=crop&w=600&q=80" alt="Avustralya">
+                <div class="card-content">
+                    <h3>Avustralya - Sidney 𝓚</h3>
+                    <p>Okyanus kıyısında gün batımını izlerken, dünyanın bir ucunda bile seninle evimde hissedeceğim o yer...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function checkPassword() {
+            const input = document.getElementById('password-input').value;
+            if (input === '2808') {
+                document.getElementById('login-screen').style.display = 'none';
+                document.getElementById('main-content').style.display = 'block';
+                setInterval(() => {
+                    const heart = document.createElement('div');
+                    heart.classList.add('heart');
+                    heart.innerHTML = '❤️';
+                    heart.style.left = Math.random() * 100 + 'vw';
+                    document.body.appendChild(heart);
+                    setTimeout(() => heart.remove(), 5000);
+                }, 300);
+            } else {
+                document.getElementById('error-message').style.display = 'block';
+            }
+        }
+    </script>
+</body>
+</html>
