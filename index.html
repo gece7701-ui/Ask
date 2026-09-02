@@ -177,12 +177,24 @@
       font-size: 1.05rem;
     }
 
-    /* Not Butonları */
+    /* Not & Test Butonları */
     .note-btn {
       background: #f8bbd0;
       color: #880e4f;
       margin-top: 8px;
       font-size: 0.9rem;
+    }
+
+    .quiz-btn {
+      background: #ffffff;
+      color: #e91e63;
+      border: 1.5px solid #f48fb1;
+      padding: 10px;
+      border-radius: 12px;
+      margin-top: 6px;
+      width: 100%;
+      font-weight: 600;
+      cursor: pointer;
     }
   </style>
 </head>
@@ -190,7 +202,6 @@
 
 <div class="container">
 
-  <!-- KİLİT EKRANI -->
   <div id="lock-screen">
     <h1>Aşkımızın Kilit Ekranı ✨</h1>
     <p style="margin-bottom: 15px; font-size: 0.9rem;">Giriş yapmak için şifreyi gir sevgilim</p>
@@ -199,10 +210,8 @@
     <p id="error-msg" style="color: #d32f2f; margin-top: 10px; font-size: 0.85rem; display: none;">Hatalı şifre sevgilim, tekrar dene! 🙈</p>
   </div>
 
-  <!-- ANA İÇERİK -->
   <div id="main-content">
 
-    <!-- Müzik Çalar -->
     <div class="card">
       <h2>Bizim Şarkımız 🎵</h2>
       <p style="font-size: 0.85rem; margin-bottom: 4px;">Aydilge - Aşka Gel 🍓</p>
@@ -210,7 +219,6 @@
       <audio id="bg-music" src="aska-gel.mp3" loop></audio>
     </div>
 
-    <!-- 28 Ağustos 22:05 Ayarlı Canlı Sayaç -->
     <div class="card">
       <h2>İyi ki Sen ❤️</h2>
       <p style="font-size: 0.85rem; margin-bottom: 8px;">28 Ağustos 22:05'ten beri seninle geçen süremiz:</p>
@@ -222,7 +230,6 @@
       </div>
     </div>
 
-    <!-- İnteraktif Harita Alanı -->
     <div class="card">
       <h2>Aramızdaki Mesafeler 🗺️</h2>
       <div class="map-container">
@@ -231,22 +238,43 @@
         <div class="city-dot">Hatay 📍</div>
       </div>
       <p style="font-weight: 500; color: #ad1457; font-size: 0.95rem; margin-top: 12px;">
-        Aradaki kilometrelerin hiçbir önemi yok kalbim hep seninle. 💕
+        Aradaki kilometrelerin hiçbir önemi yok, kalbim her an seninle atıyor. 💕
       </p>
     </div>
 
-    <!-- Göz Fotoğrafı Bölümü -->
     <div class="card">
-      <img src="goz.jpg" alt="Gözüm" class="eye-img" onerror="this.src='https://via.placeholder.com/400x250?text=goz.jpg+Yukle'">
+      <img src="goz.jpg" alt="Gözüm" class="eye-img">
       <p class="eye-text">Bu göz sadece seni görüyor! 😉👁️❤️</p>
     </div>
 
-    <!-- Moduna Göre Notlar -->
+    <div class="card">
+      <h2>Favori Sözümüz 💫</h2>
+      <p style="font-style: italic; font-size: 0.95rem; color: #ad1457; line-height: 1.5;">
+        "Mesafe dediğin nedir ki sevgili? Kalplerimiz bir olduktan sonra km'lerin ne önemi var..." ✨💖
+      </p>
+    </div>
+
+    <div class="card">
+      <h2>Minik Test 🧐</h2>
+      <p style="font-size: 0.85rem; margin-bottom: 10px;">Beni ne kadar tanıyorsun? Tıkla ve gör!</p>
+      
+      <button class="quiz-btn" onclick="alert('DOĞRU! Benim en büyük mutluluğum sensin! 🥰')">1. Benim en sevdiğim şey nedir?</button>
+      <button class="quiz-btn" onclick="alert('KOCAMAN BİR EVET! Sen benim her şeyimsin. 💖')">2. Seni ne kadar çok seviyorum?</button>
+      <button class="quiz-btn" onclick="alert('Sabırsızlıkla o günü bekliyorum sevgilim! 🥹✨')">3. Yan yana geleceğimiz an ne yapacağız?</button>
+    </div>
+
     <div class="card">
       <h2>Sana Bir Not Bıraktım ✉️</h2>
       <button class="btn note-btn" onclick="alert('Hemen gözlerini kapat, sana sımsıkı sarıldığımı hisset ve bana mesaj at sevgilim! 💖')">🙈 Beni Özlediğinde Tıkla</button>
       <button class="btn note-btn" onclick="alert('Unutma, ben her zaman senin yanındayım. Sen benim en değerli varlığımsın, yüzün hep gülsün! 🥹✨')">🥹 Modun Düşük Olduğunda Tıkla</button>
       <button class="btn note-btn" onclick="alert('Seni dünyadaki her şeyden çok sevdiğimi bil ve gülümse! 😜❤️')">💖 Gülümsemek İstediğinde Tıkla</button>
+    </div>
+
+    <div class="card" style="background: #ffebee;">
+      <h2>Sana Sözüm Var 💍</h2>
+      <p style="font-size: 0.9rem; color: #880e4f; line-height: 1.4;">
+        Araya ne kadar mesafe girerse girsin, her zaman elini tutmaya ve seni hep çok sevmeye söz veriyorum sevgilim. 🌹✨
+      </p>
     </div>
 
   </div>
@@ -278,7 +306,8 @@
   }
 
   function startTimer() {
-    const startDate = new Date("2024-08-28T22:05:00"); 
+    // 28 Ağustos 2026 - 22:05 olarak ayarlandı
+    const startDate = new Date("2026-08-28T22:05:00"); 
 
     setInterval(() => {
       const now = new Date();
@@ -298,5 +327,4 @@
 </script>
 
 </body>
-      </html>
-      
+</html>
