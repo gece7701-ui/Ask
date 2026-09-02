@@ -3,7 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Göksu & Sedat ✨</title>
+
+  <title>S & G ✨</title>
+  <meta property="og:title" content="S & G ✨">
+  <meta property="og:description" content="Aşkımızın Küçük Köşesi ❤️">
+
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Dancing+Script:wght@700&display=swap');
 
@@ -177,7 +181,53 @@
       font-size: 1.05rem;
     }
 
-    /* Not & Test Butonları */
+    /* Şiir Kutusu */
+    .quote-box {
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.4rem;
+      color: #ad1457;
+      line-height: 1.6;
+      background: #ffffff;
+      padding: 15px;
+      border-radius: 14px;
+      border-left: 4px solid #e91e63;
+      margin-top: 10px;
+    }
+
+    /* Papatya Falı Tasarımı */
+    .daisy-btn {
+      background: #ffffff;
+      border: 2px solid #f48fb1;
+      font-size: 3.5rem;
+      padding: 12px 20px;
+      border-radius: 50%;
+      cursor: pointer;
+      margin: 10px auto;
+      display: inline-block;
+      transition: transform 0.15s;
+      user-select: none;
+    }
+    .daisy-btn:active {
+      transform: scale(0.85);
+    }
+    #daisy-result {
+      font-weight: bold;
+      color: #e91e63;
+      font-size: 1.1rem;
+      margin-top: 10px;
+      min-height: 30px;
+    }
+
+    /* Zaman Kapsülü Kilitli Kart */
+    .capsule-box {
+      background: #ffffff;
+      border: 2px dashed #ad1457;
+      border-radius: 16px;
+      padding: 20px;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+
     .note-btn {
       background: #f8bbd0;
       color: #880e4f;
@@ -185,17 +235,6 @@
       font-size: 0.9rem;
     }
 
-    .quiz-btn {
-      background: #ffffff;
-      color: #e91e63;
-      border: 1.5px solid #f48fb1;
-      padding: 10px;
-      border-radius: 12px;
-      margin-top: 6px;
-      width: 100%;
-      font-weight: 600;
-      cursor: pointer;
-    }
   </style>
 </head>
 <body>
@@ -203,7 +242,7 @@
 <div class="container">
 
   <div id="lock-screen">
-    <h1>Aşkımızın Kilit Ekranı ✨</h1>
+    <h1>S & G ✨</h1>
     <p style="margin-bottom: 15px; font-size: 0.9rem;">Giriş yapmak için şifreyi gir sevgilim</p>
     <input type="password" id="pass-input" placeholder="Şifreniz...">
     <button class="btn" onclick="checkPassword()">Aç ❤️</button>
@@ -223,11 +262,28 @@
       <h2>İyi ki Sen ❤️</h2>
       <p style="font-size: 0.85rem; margin-bottom: 8px;">28 Ağustos 22:05'ten beri seninle geçen süremiz:</p>
       <div class="timer-grid">
-        <div class="timer-box"><span id="days">0</span><small>Gün</small></div>
+        <div class="timer-box"><span id="days">6</span><small>Gün</small></div>
         <div class="timer-box"><span id="hours">0</span><small>Saat</small></div>
         <div class="timer-box"><span id="minutes">0</span><small>Dakika</small></div>
         <div class="timer-box"><span id="seconds">0</span><small>Saniye</small></div>
       </div>
+    </div>
+
+    <div class="card">
+      <h2>Sana Olan Sevgim 🤍</h2>
+      <div class="quote-box">
+        “Bin yıl ömrüm olsaydı<br>
+        Bin yıl seni severdim<br>
+        Bin yıl benim olsaydın<br>
+        Bin yıl daha isterdim…” ✨❤️
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Papatya Falı 🌼</h2>
+      <p style="font-size: 0.85rem;">Papatyaya tıkla ve yaprakları koparmaya başla sevgilim! 😉</p>
+      <div class="daisy-btn" id="daisy-icon" onclick="pluckPetal()">🌼</div>
+      <div id="daisy-result">Papatyaya dokun...</div>
     </div>
 
     <div class="card">
@@ -248,19 +304,12 @@
     </div>
 
     <div class="card">
-      <h2>Favori Sözümüz 💫</h2>
-      <p style="font-style: italic; font-size: 0.95rem; color: #ad1457; line-height: 1.5;">
-        "Mesafe dediğin nedir ki sevgili? Kalplerimiz bir olduktan sonra km'lerin ne önemi var..." ✨💖
-      </p>
-    </div>
-
-    <div class="card">
-      <h2>Minik Test 🧐</h2>
-      <p style="font-size: 0.85rem; margin-bottom: 10px;">Beni ne kadar tanıyorsun? Tıkla ve gör!</p>
-      
-      <button class="quiz-btn" onclick="alert('DOĞRU! Benim en büyük mutluluğum sensin! 🥰')">1. Benim en sevdiğim şey nedir?</button>
-      <button class="quiz-btn" onclick="alert('KOCAMAN BİR EVET! Sen benim her şeyimsin. 💖')">2. Seni ne kadar çok seviyorum?</button>
-      <button class="quiz-btn" onclick="alert('Sabırsızlıkla o günü bekliyorum sevgilim! 🥹✨')">3. Yan yana geleceğimiz an ne yapacağız?</button>
+      <h2>Geleceğe Not / Zaman Kapsülü ⏳🔒</h2>
+      <div class="capsule-box" onclick="alert('🔒 Bu mektup kilitlidir!\n\nYalnızca 28 Ağustos 2027 tarihinde (1. Yıl Dönümümüzde) açılacaktır sevgilim... ❤️✨')">
+        <span style="font-size: 2.5rem;">✉️</span>
+        <p style="font-weight: bold; color: #ad1457; margin-top: 5px;">1. Yıl Mektubumuz</p>
+        <p style="font-size: 0.75rem; color: #888;">(Açmak için üzerine tıkla)</p>
+      </div>
     </div>
 
     <div class="card">
@@ -306,13 +355,10 @@
   }
 
   function startTimer() {
-    // 28 Ağustos 2026 - 22:05 olarak ayarlandı
-    const startDate = new Date("2026-08-28T22:05:00"); 
-
+    const startDate = new Date("2026-08-27T22:05:00"); 
     setInterval(() => {
       const now = new Date();
       const diff = now - startDate;
-
       const days = Math.floor(diff / (1000 * 60 * 60 * 24));
       const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
       const minutes = Math.floor((diff / 1000 / 60) % 60);
@@ -323,6 +369,45 @@
       document.getElementById('minutes').innerText = minutes;
       document.getElementById('seconds').innerText = seconds;
     }, 1000);
+  }
+
+  /* Papatya Falı Kodu */
+  let currentStep = 0;
+  let level = 0;
+
+  const loveLevels = [
+    "SEVİYOR! ❤️",
+    "ÇOK SEVİYOR! 💕",
+    "DÜNYALAR KADAR SEVİYOR! 🌍✨",
+    "EVREN KADAR SEVİYOR! 🌌💖",
+    "AŞKINDAN ÖLÜYOR! 🥳❤️🔥"
+  ];
+
+  function pluckPetal() {
+    const resultDiv = document.getElementById('daisy-result');
+    const icon = document.getElementById('daisy-icon');
+    
+    currentStep++;
+
+    if (currentStep === 1) {
+      resultDiv.innerText = "Seviyor... 🌸";
+    } else if (currentStep === 2) {
+      resultDiv.innerText = "Sevmiyor... 🙈";
+    } else if (currentStep === 3) {
+      resultDiv.innerText = "Seviyor... 💖";
+    } else if (currentStep === 4) {
+      resultDiv.innerText = "Sevmiyor... 💔";
+    } else if (currentStep === 5) {
+      resultDiv.innerText = "SONÇ: " + loveLevels[level];
+      
+      if (level < loveLevels.length - 1) {
+        level++;
+      }
+      
+      currentStep = 0;
+      icon.innerText = "🌸";
+      setTimeout(() => { icon.innerText = "🌼"; }, 1000);
+    }
   }
 </script>
 
