@@ -4,9 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Sanal VR Turlarımız ❤️</title>
-    <!-- Pannellum 360 VR Kütüphanesi -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css"/>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
     <style>
         * {
             box-sizing: border-box;
@@ -23,11 +20,12 @@
             justify-content: center;
             align-items: center;
             padding: 15px 10px;
+            overflow-x: hidden;
         }
 
         /* GİRİŞ EKRANI */
         #login-screen {
-            background: rgba(22, 27, 34, 0.9);
+            background: rgba(22, 27, 34, 0.95);
             border: 1px solid rgba(255, 105, 180, 0.3);
             padding: 30px 20px;
             border-radius: 20px;
@@ -50,7 +48,7 @@
             line-height: 1.4;
         }
 
-        input[type="number"], input[type="password"] {
+        input[type="number"] {
             width: 100%;
             padding: 14px;
             border-radius: 25px;
@@ -117,28 +115,18 @@
             background: #161b22;
             border-radius: 16px;
             border: 1px solid rgba(255, 255, 255, 0.1);
-            overflow: hidden;
+            padding: 20px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.5);
         }
 
-        .card img {
-            width: 100%;
-            height: 180px;
-            object-fit: cover;
-        }
-
-        .card-content {
-            padding: 16px;
-        }
-
-        .card-content h3 {
+        .card h3 {
             color: #ff69b4;
             margin-bottom: 8px;
-            font-size: 1.15rem;
+            font-size: 1.2rem;
         }
 
-        .card-content p {
-            font-size: 0.88rem;
+        .card p {
+            font-size: 0.9rem;
             color: #c9d1d9;
             line-height: 1.4;
             margin-bottom: 15px;
@@ -154,14 +142,10 @@
             font-size: 0.95rem;
             font-weight: bold;
             cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
             box-shadow: 0 4px 12px rgba(138, 43, 226, 0.3);
         }
 
-        /* 360 SANAL GERÇEKLİK TAM EKRAN POPUP */
+        /* VR POPUP MODAL */
         #vr-modal {
             display: none;
             position: fixed;
@@ -185,7 +169,7 @@
 
         #vr-title {
             color: #ff69b4;
-            font-size: 0.95rem;
+            font-size: 1rem;
             font-weight: bold;
         }
 
@@ -197,11 +181,34 @@
             border-radius: 8px;
             font-size: 0.85rem;
             font-weight: bold;
+            cursor: pointer;
         }
 
-        #panorama {
+        #canvas-container {
+            flex: 1;
             width: 100%;
             height: 100%;
+            position: relative;
+            touch-action: none;
+        }
+
+        canvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        .vr-hint {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.7);
+            color: #fff;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            pointer-events: none;
         }
 
         .heart {
@@ -237,60 +244,45 @@
         </header>
 
         <div class="destinations">
-            <!-- İSVİÇRE -->
             <div class="card">
-                <img src="https://images.unsplash.com/photo-1530122037265-a5f1f91d3b99?auto=format&fit=crop&w=600&q=80" alt="İsviçre">
-                <div class="card-content">
-                    <h3>İsviçre - Alp Dağları 🏔️</h3>
-                    <p>Seninle o ahşap dağ evinde, kar yağışını izlerken sıcak çikolatamızı yudumlayacağımız günlerin simülasyonu...</p>
-                    <button class="vr-vr-btn vr-btn" onclick="openVR('İsviçre Alpleri', 'https://pannellum.org/images/alma.jpg')">🥽 360° VR İçine Gir</button>
-                </div>
+                <h3>İsviçre - Alp Dağları 🏔️</h3>
+                <p>Ahşap dağ evinde, karlarla kaplı zirvelere karşı sıcak çikolatamızı yudumlayacağımız o büyülü atmosfer...</p>
+                <button class="vr-btn" onclick="openVR('İsviçre Alpleri', 'alps')">🥽 360° VR Simülasyonuna Gir</button>
             </div>
 
-            <!-- MALDİVLER -->
             <div class="card">
-                <img src="https://images.unsplash.com/photo-1514282401047-d79a71a590e8?auto=format&fit=crop&w=600&q=80" alt="Maldivler">
-                <div class="card-content">
-                    <h3>Maldivler 🏖️</h3>
-                    <p>Turkuaz deniz, masmavi bir gökyüzü ve sahil boyunca el ele yürüyeceğimiz o eşsiz anlar...</p>
-                    <button class="vr-btn" onclick="openVR('Maldivler Sahili', 'https://pannellum.org/images/boulder.jpg')">🥽 360° VR İçine Gir</button>
-                </div>
+                <h3>Maldivler - Sahil 🏖️</h3>
+                <p>Turkuaz deniz, palmiyeler ve sahil boyunca el ele yürüyeceğimiz huzur dolu sahil simülasyonu...</p>
+                <button class="vr-btn" onclick="openVR('Maldivler Sahili', 'beach')">🥽 360° VR Simülasyonuna Gir</button>
             </div>
 
-            <!-- ROMANYA -->
             <div class="card">
-                <img src="https://images.unsplash.com/photo-1584646098378-0874589d76b1?auto=format&fit=crop&w=600&q=80" alt="Romanya">
-                <div class="card-content">
-                    <h3>Romanya - Tarihi Sokaklar 🏰</h3>
-                    <p>Gizemli ve masalsı sokaklarda, tarih kokan şatoların arasında birlikte kaybolacağımız rotamız...</p>
-                    <button class="vr-btn" onclick="openVR('Romanya Sokakları', 'https://pannellum.org/images/cerro-toco.jpg')">🥽 360° VR İçine Gir</button>
-                </div>
+                <h3>Romanya - Tarihi Şato 🏰</h3>
+                <p>Masalsı kuleler ve gizemli dağ manzaraları eşliğinde tarihi bir gezi...</p>
+                <button class="vr-btn" onclick="openVR('Romanya Şatosu', 'castle')">🥽 360° VR Simülasyonuna Gir</button>
             </div>
 
-            <!-- AVUSTRALYA -->
             <div class="card">
-                <img src="https://images.unsplash.com/photo-1523482580672-f109ba8cb9be?auto=format&fit=crop&w=600&q=80" alt="Avustralya">
-                <div class="card-content">
-                    <h3>Avustralya - Sidney 𝓚</h3>
-                    <p>Okyanus kıyısında gün batımını izlerken, dünyanın bir ucunda bile seninle evimde hissedeceğim o yer...</p>
-                    <button class="vr-btn" onclick="openVR('Avustralya Manzarası', 'https://pannellum.org/images/jrc.jpg')">🥽 360° VR İçine Gir</button>
-                </div>
+                <h3>Avustralya - Sidney 𝓚</h3>
+                <p>Okyanus esintisi ve gün batımının kızıllığı eşliğinde harika bir akşam simülasyonu...</p>
+                <button class="vr-btn" onclick="openVR('Sidney Manzarası', 'sydney')">🥽 360° VR Simülasyonuna Gir</button>
             </div>
         </div>
     </div>
 
-    <!-- VR SİMÜLASYON POPUP PENCERESİ -->
+    <!-- VR POPUP MODAL -->
     <div id="vr-modal">
         <div id="vr-header">
             <span id="vr-title">360° VR Görünümü</span>
             <button class="close-btn" onclick="closeVR()">Çıkış ✖</button>
         </div>
-        <div id="panorama"></div>
+        <div id="canvas-container">
+            <canvas id="vrCanvas"></canvas>
+            <div class="vr-hint">👆 Parmağınla 360° Etrafta Gezin</div>
+        </div>
     </div>
 
     <script>
-        let viewer = null;
-
         function checkPassword() {
             const input = document.getElementById('password-input').value;
             if (input === '2808') {
@@ -310,31 +302,164 @@
             }
         }
 
-        function openVR(title, imageUrl) {
-            document.getElementById('vr-title').innerText = title;
-            document.getElementById('vr-modal').style.display = 'flex';
+        // CANVAS 360 ENGINE
+        const canvas = document.getElementById('vrCanvas');
+        const ctx = canvas.getContext('2d');
+        let isDragging = false;
+        let startX = 0, startY = 0;
+        let rotationX = 0, rotationY = 0;
+        let currentTheme = 'alps';
+        let animId = null;
 
-            if (viewer) {
-                viewer.destroy();
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight - 50;
+        }
+
+        window.addEventListener('resize', resizeCanvas);
+
+        function drawScene() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            const w = canvas.width;
+            const h = canvas.height;
+
+            // Arka Plan Gökyüzü / Degrade
+            let grad = ctx.createLinearGradient(0, 0, 0, h);
+            if (currentTheme === 'alps') {
+                grad.addColorStop(0, '#1a365d');
+                grad.addColorStop(0.5, '#63b3ed');
+                grad.addColorStop(1, '#ebf8ff');
+            } else if (currentTheme === 'beach') {
+                grad.addColorStop(0, '#0284c7');
+                grad.addColorStop(0.6, '#38bdf8');
+                grad.addColorStop(1, '#bae6fd');
+            } else if (currentTheme === 'castle') {
+                grad.addColorStop(0, '#2e1065');
+                grad.addColorStop(0.6, '#7c3aed');
+                grad.addColorStop(1, '#ddd6fe');
+            } else {
+                grad.addColorStop(0, '#831843');
+                grad.addColorStop(0.6, '#f43f5e');
+                grad.addColorStop(1, '#fde047');
+            }
+            ctx.fillStyle = grad;
+            ctx.fillRect(0, 0, w, h);
+
+            // Panorama Nesneleri (Pan Effect)
+            const offsetX = (rotationX % w + w) % w;
+            const offsetY = Math.max(-100, Math.min(100, rotationY));
+
+            ctx.save();
+            ctx.translate(-offsetX, offsetY);
+
+            for (let i = -1; i <= 2; i++) {
+                const shift = i * w;
+
+                if (currentTheme === 'alps') {
+                    // Dağlar ve Karlar
+                    ctx.fillStyle = '#2d3748';
+                    ctx.beginPath();
+                    ctx.moveTo(shift + 0, h - 100);
+                    ctx.lineTo(shift + w * 0.3, h - 350);
+                    ctx.lineTo(shift + w * 0.6, h - 100);
+                    ctx.fill();
+
+                    ctx.fillStyle = '#fff';
+                    ctx.beginPath();
+                    ctx.moveTo(shift + w * 0.25, h - 280);
+                    ctx.lineTo(shift + w * 0.3, h - 350);
+                    ctx.lineTo(shift + w * 0.35, h - 280);
+                    ctx.fill();
+
+                    // İsviçre Evleri
+                    ctx.fillStyle = '#744210';
+                    ctx.fillRect(shift + w * 0.4, h - 180, 120, 80);
+                    ctx.fillStyle = '#9b2c2c';
+                    ctx.beginPath();
+                    ctx.moveTo(shift + w * 0.4 - 10, h - 180);
+                    ctx.lineTo(shift + w * 0.4 + 60, h - 230);
+                    ctx.lineTo(shift + w * 0.4 + 130, h - 180);
+                    ctx.fill();
+                } else if (currentTheme === 'beach') {
+                    // Deniz ve Sahil
+                    ctx.fillStyle = '#fef08a';
+                    ctx.fillRect(shift + 0, h - 150, w, 150);
+                    ctx.fillStyle = '#0284c7';
+                    ctx.fillRect(shift + 0, h - 220, w, 70);
+                } else if (currentTheme === 'castle') {
+                    // Şato Kuleleri
+                    ctx.fillStyle = '#475569';
+                    ctx.fillRect(shift + w * 0.3, h - 300, 80, 200);
+                    ctx.fillRect(shift + w * 0.5, h - 380, 100, 280);
+                } else {
+                    // Gün batımı şehir silüeti
+                    ctx.fillStyle = '#1e293b';
+                    ctx.fillRect(shift + w * 0.2, h - 250, 90, 150);
+                    ctx.fillRect(shift + w * 0.4, h - 320, 110, 220);
+                }
             }
 
-            // Pannellum 360 VR Motoru
-            viewer = pannellum.viewer('panorama', {
-                "type": "equirectangular",
-                "panorama": imageUrl,
-                "autoLoad": true,
-                "autoRotate": -2,
-                "compass": false,
-                "orientationOnByDefault": true
-            });
+            ctx.restore();
+
+            // Otomatik Yavaş Dönüş
+            if (!isDragging) {
+                rotationX += 0.5;
+            }
+
+            animId = requestAnimationFrame(drawScene);
+        }
+
+        // Dokunma / Sürükleme Kontrolleri
+        const container = document.getElementById('canvas-container');
+
+        container.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            startX = e.clientX;
+            startY = e.clientY;
+        });
+
+        window.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            const dx = e.clientX - startX;
+            const dy = e.clientY - startY;
+            rotationX -= dx * 0.8;
+            rotationY += dy * 0.5;
+            startX = e.clientX;
+            startY = e.clientY;
+        });
+
+        window.addEventListener('mouseup', () => isDragging = false);
+
+        container.addEventListener('touchstart', (e) => {
+            isDragging = true;
+            startX = e.touches[0].clientX;
+            startY = e.touches[0].clientY;
+        });
+
+        container.addEventListener('touchmove', (e) => {
+            if (!isDragging) return;
+            const dx = e.touches[0].clientX - startX;
+            const dy = e.touches[0].clientY - startY;
+            rotationX -= dx * 0.8;
+            rotationY += dy * 0.5;
+            startX = e.touches[0].clientX;
+            startY = e.touches[0].clientY;
+        });
+
+        container.addEventListener('touchend', () => isDragging = false);
+
+        function openVR(title, theme) {
+            document.getElementById('vr-title').innerText = title;
+            document.getElementById('vr-modal').style.display = 'flex';
+            currentTheme = theme;
+            resizeCanvas();
+            if (animId) cancelAnimationFrame(animId);
+            drawScene();
         }
 
         function closeVR() {
             document.getElementById('vr-modal').style.display = 'none';
-            if (viewer) {
-                viewer.destroy();
-                viewer = null;
-            }
+            if (animId) cancelAnimationFrame(animId);
         }
     </script>
 </body>
