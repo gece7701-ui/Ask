@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aşk Havayolları - Sanal Seyahat Simülasyonu</title>
+    
+    <!-- Sitenin içinde 360 derece dönebilmek için gerekli sihirli kütüphane -->
+    <link rel="stylesheet" href="https://jsdelivr.net"/>
+    <script type="text/javascript" src="https://jsdelivr.net"></script>
+
     <style>
         body {
             margin: 0;
@@ -25,6 +30,7 @@
             text-align: center;
             max-width: 400px;
             width: 90%;
+            z-index: 10;
         }
 
         h2 { color: #2d3436; margin-bottom: 5px; letter-spacing: 1px; }
@@ -62,44 +68,30 @@
 
         .hidden { display: none !important; }
 
-        .loading-screen {
+        /* SİNEMATİK SİMÜLATÖR EKRANI */
+        #panorama-container {
             position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
-            background: #2d3436;
-            color: white;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: black;
+            z-index: 100;
+        }
+
+        .back-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.7);
+            color: #2d3436;
+            border: none;
+            padding: 12px 20px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
             z-index: 110;
-            padding: 25px;
-            text-align: center;
-            box-sizing: border-box;
-        }
-
-        .plane-animation {
-            font-size: 60px;
-            animation: fly 2s infinite ease-in-out;
-            margin-bottom: 20px;
-        }
-
-        @keyframes fly {
-            0% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(5deg); }
-            100% { transform: translateY(0) rotate(0deg); }
-        }
-
-        #go-to-sim-btn {
-            background: #00b894;
-            margin-top: 25px;
-            max-width: 280px;
-            animation: pulse 1.5s infinite;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
+            backdrop-filter: blur(5px);
         }
     </style>
 </head>
@@ -121,64 +113,73 @@
                 <select id="destination">
                     <option value="">-- Nereye Gitmek İstersin? --</option>
                     <option value="switzerland">İsviçre Alpleri (Kış Masalı)</option>
-                    <option value="maldives">Maldivler Sahili (Sualtı Bungalovları)</option>
-                    <option value="australia">Avustralya (Büyük Set Resifi)</option>
+                    <option value="maldives">Maldivler Sahili (Yaz Güneşi)</option>
+                    <option value="australia">Avustralya (Sidney Şehir Turu)</option>
                 </select>
             </div>
             
-            <button class="action-btn" onclick="startSimulation()">Uçuş Kartını Onayla ✈ Pres</button>
+            <button class="action-btn" onclick="startSimulation()">Simülasyonu Kilitle ✈️</button>
         </div>
     </div>
 
-    <!-- HİKAYE VE AKTİF BUTON EKRANI -->
-    <div id="loading-screen" class="hidden">
-        <div class="plane-animation">✈️</div>
-        <h2 style="color: white;" id="loading-title">Uçuş Başlıyor...</h2>
-        <p style="font-size: 18px; color: #dfe6e9; max-width: 500px; line-height: 1.6;" id="loading-text">Yolculuk hazırlanıyor...</p>
-        
-        <!-- Tarayıcı engelini aşan sihirli buton -->
-        <button id="go-to-sim-btn" class="action-btn hidden" onclick="openSimulation()">Uçağa Bin ve Kemerini Bağla ✈️</button>
+    <!-- GERÇEK KODİÇİ 360 DERECE SİMÜLASYON ALANI (YÖNLENDİRME YOK!) -->
+    <div id="panorama-container" class="hidden">
+        <button class="back-btn" onclick="goBack()">✈️ Başka Ülkeye Uç</button>
+        <div id="panorama" style="width: 100%; height: 100%;"></div>
     </div>
 
     <script>
-        let finalUrl = "";
-
         function startSimulation() {
             const name = document.getElementById('passenger-name').value;
             const dest = document.getElementById('destination').value;
 
             if (!name || !dest) {
-                alert('Lütfen yolcu adını yazın ve uçmak istediğiniz rotayı seçin! ✈️');
+                alert('Lütfen rotayı seçin! ✈️');
                 return;
             }
 
+            // Giriş ekranını kapat, simülasyonu aynı sitede aç
             document.getElementById('ticket-container').classList.add('hidden');
-            document.getElementById('loading-screen').classList.remove('hidden');
-            
+            document.getElementById('panorama-container').classList.remove('hidden');
+
+            let imageUrl = "";
+            let infoText = "";
+
+            // İnternetteki engellenmeyen, doğrudan CDN üzerinden çekilen yüksek çözünürlüklü 360 derece gezi fotoğrafları
             if (dest === "switzerland") {
-                document.getElementById('loading-title').innerText = "🏔️ İsviçre Uçuşu";
-                document.getElementById('loading-text').innerText = `Sayın Yolcumuz ${name}, Aşk Havayolları İsviçre semalarına ulaştı! Senin için karlı Alplerde harika bir dağ treni yolculuğu hazırladım. Telefonunu sağa sola çevirerek 360 derece etrafı izleyebilirsin. Hazırsan aşağıdaki butona tıklayarak uçağın kapısını aç!`;
-                finalUrl = "https://youtube.com"; 
+                imageUrl = "https://pannellum.org"; // Dağ ve doğa manzarası
+                infoText = `Sedat için İsviçre Alpleri Simülasyonu`;
             } else if (dest === "maldives") {
-                document.getElementById('loading-title').innerText = "🏝️ Maldivler Uçuşu";
-                document.getElementById('loading-text').innerText = `Sayın Yolcumuz ${name}, şu an pırıl pırıl parlayan Maldivler adalarının üzerindeyiz! Seni masmavi sulara, okyanus altı otellerine ve bembeyaz sahillere indiriyorum. Hazırsan aşağıdaki yeşil butona bas ve adaya ilk adımını at!`;
-                finalUrl = "https://youtube.com"; 
+                imageUrl = "https://pannellum.org"; // Alternatif stabil sahil panoraması
+                // Eğer üstteki yüklenmezse pannellum resmi yedek:
+                imageUrl = "https://pannellum.org"; // Muhteşem fiyort/sahil manzarası
+                infoText = `Sedat için Maldivler Sahil Simülasyonu`;
             } else if (dest === "australia") {
-                document.getElementById('loading-title').innerText = "🦘 Avustralya Uçuşu";
-                document.getElementById('loading-text').innerText = `Sayın Yolcumuz ${name}, devasa okyanusları aştık ve Avustralya semalarındayız! Seninle helikoptere binip Büyük Set Resifi'ni ve Sidney sokaklarını 360 derece gezeceğiz. Hazırsan butona bas ve macerayı başlat!`;
-                finalUrl = "https://youtube.com"; 
+                imageUrl = "https://pannellum.org"; // Canlı şehir/açık alan panoraması
+                infoText = `Sedat için Avustralya Simülasyonu`;
             }
 
-            // Kısa bir süre sonra yeşil buton parlayarak ekrana gelir, tarayıcı engeli kalkar
-            setTimeout(() => {
-                document.getElementById('go-to-sim-btn').classList.remove('hidden');
-            }, 1500);
+            // Pannellum 360 derece oynatıcısını sitenin içinde sıfırdan çalıştırıyoruz
+            pannellum.viewer('panorama', {
+                "type": "cubic",
+                "cubeImages": [
+                    "https://pannellum.org",
+                    "https://pannellum.org",
+                    "https://pannellum.org",
+                    "https://pannellum.org",
+                    "https://pannellum.org",
+                    "https://pannellum.org"
+                ],
+                "title": infoText,
+                "author": "Aşk Havayolları",
+                "autoLoad": true,
+                "autoRotate": -2
+            });
         }
 
-        function openSimulation() {
-            if(finalUrl !== "") {
-                window.location.href = finalUrl; // Doğrudan kullanıcının tıklamasıyla tetiklendiği için ASLA engellenemez
-            }
+        function goBack() {
+            document.getElementById('panorama-container').classList.add('hidden');
+            document.getElementById('ticket-container').classList.remove('hidden');
         }
     </script>
 </body>
