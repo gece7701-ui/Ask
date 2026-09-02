@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Göksu & Sedat ✨</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Dancing+Script:wght@700&display=swap');
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: #fce4ec;
+      font-family: 'Poppins', sans-serif;
+      color: #4a4a4a;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px 10px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 480px;
+      background: #ffffff;
+      border-radius: 24px;
+      padding: 24px 20px;
+      box-shadow: 0 10px 30px rgba(233, 30, 99, 0.15);
+    }
+
+    /* Kilit Ekranı */
+    #lock-screen {
+      text-align: center;
+      padding: 40px 10px;
+    }
+
+    h1, h2 {
+      font-family: 'Dancing Script', cursive;
+      color: #e91e63;
+      margin-bottom: 15px;
+    }
+
+    h1 { font-size: 2.5rem; }
+    h2 { font-size: 2rem; }
+
+    input[type="password"] {
+      width: 100%;
+      padding: 12px 16px;
+      border: 2px solid #f8bbd0;
+      border-radius: 12px;
+      outline: none;
+      font-size: 1rem;
+      text-align: center;
+      margin-bottom: 12px;
+    }
+
+    .btn {
+      width: 100%;
+      background: #e91e63;
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 20px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(233, 30, 99, 0.3);
+      transition: 0.2s;
+    }
+
+    .btn:active {
+      transform: scale(0.98);
+    }
+
+    #main-content {
+      display: none;
+    }
+
+    .card {
+      background: #fff5f8;
+      border-radius: 18px;
+      padding: 18px;
+      margin-bottom: 20px;
+      border: 1px solid #f8bbd0;
+      text-align: center;
+    }
+
+    .music-btn {
+      background: #ad1457;
+      margin-top: 8px;
+    }
+
+    /* Sayaç */
+    .timer-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .timer-box {
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 8px;
+      border: 1px solid #f48fb1;
+    }
+
+    .timer-box span {
+      display: block;
+      font-weight: bold;
+      color: #e91e63;
+      font-size: 1.2rem;
+    }
+
+    .timer-box small {
+      font-size: 0.75rem;
+      color: #777;
+    }
+
+    /* Harita Alanı */
+    .map-container {
+      position: relative;
+      background: #ffebee;
+      border-radius: 16px;
+      padding: 30px 20px;
+      margin-top: 10px;
+      border: 2px dashed #f48fb1;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .city-dot {
+      background: #e91e63;
+      color: white;
+      padding: 8px 14px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: bold;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .line-connector {
+      flex-grow: 1;
+      height: 2px;
+      border-top: 2px dashed #e91e63;
+      margin: 0 10px;
+      position: relative;
+    }
+
+    .line-connector::after {
+      content: '✈️❤️';
+      position: absolute;
+      top: -14px;
+      left: 40%;
+      font-size: 1.1rem;
+    }
+
+    /* Göz Fotoğrafı */
+    .eye-img {
+      width: 100%;
+      max-height: 250px;
+      object-fit: cover;
+      border-radius: 16px;
+      border: 3px solid #f48fb1;
+      margin-bottom: 10px;
+    }
+
+    .eye-text {
+      font-weight: 600;
+      color: #ad1457;
+      font-size: 1.05rem;
+    }
+
+    /* Not Butonları */
+    .note-btn {
+      background: #f8bbd0;
+      color: #880e4f;
+      margin-top: 8px;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+  <div id="lock-screen">
+    <h1>Aşkımızın Kilit Ekranı ✨</h1>
+    <p style="margin-bottom: 15px; font-size: 0.9rem;">Giriş yapmak için şifreyi gir sevgilim</p>
+    <input type="password" id="pass-input" placeholder="Şifreniz...">
+    <button class="btn" onclick="checkPassword()">Aç ❤️</button>
+    <p id="error-msg" style="color: #d32f2f; margin-top: 10px; font-size: 0.85rem; display: none;">Hatalı şifre sevgilim, tekrar dene! 🙈</p>
+  </div>
+
+  <div id="main-content">
+
+    <div class="card">
+      <h2>Bizim Şarkımız 🎵</h2>
+      <p style="font-size: 0.85rem; margin-bottom: 4px;">Aydilge - Aşka Gel 🍓</p>
+      <button class="btn music-btn" onclick="toggleMusic()" id="music-btn-text">▶️ Şarkıyı Başlat</button>
+      <audio id="bg-music" src="aska-gel.mp3" loop></audio>
+    </div>
+
+    <div class="card">
+      <h2>İyi ki Sen ❤️</h2>
+      <p style="font-size: 0.85rem; margin-bottom: 8px;">28 Ağustos 22:05'ten beri seninle geçen süremiz:</p>
+      <div class="timer-grid">
+        <div class="timer-box"><span id="days">0</span><small>Gün</small></div>
+        <div class="timer-box"><span id="hours">0</span><small>Saat</small></div>
+        <div class="timer-box"><span id="minutes">0</span><small>Dakika</small></div>
+        <div class="timer-box"><span id="seconds">0</span><small>Saniye</small></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Aramızdaki Mesafeler 🗺️</h2>
+      <div class="map-container">
+        <div class="city-dot">İzmir 📍</div>
+        <div class="line-connector"></div>
+        <div class="city-dot">Hatay 📍</div>
+      </div>
+      <p style="font-weight: 500; color: #ad1457; font-size: 0.95rem; margin-top: 12px;">
+        Aradaki kilometrelerin hiçbir önemi yok kalbim hep seninle. 💕
+      </p>
+    </div>
+
+    <div class="card">
+      <img src="goz.jpg" alt="Gözüm" class="eye-img" onerror="this.src='https://via.placeholder.com/400x250?text=goz.jpg+Yukle'">
+      <p class="eye-text">Bu göz sadece seni görüyor! 😉👁️❤️</p>
+    </div>
+
+    <div class="card">
+      <h2>Sana Bir Not Bıraktım ✉️</h2>
+      <button class="btn note-btn" onclick="alert('Hemen gözlerini kapat, sana sımsıkı sarıldığımı hisset ve bana mesaj at sevgilim! 💖')">🙈 Beni Özlediğinde Tıkla</button>
+      <button class="btn note-btn" onclick="alert('Unutma, ben her zaman senin yanındayım. Sen benim en değerli varlığımsın, yüzün hep gülsün! 🥹✨')">🥹 Modun Düşük Olduğunda Tıkla</button>
+      <button class="btn note-btn" onclick="alert('Seni dünyadaki her şeyden çok sevdiğimi bil ve gülümse! 😜❤️')">💖 Gülümsemek İstediğinde Tıkla</button>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+  function checkPassword() {
+    const input = document.getElementById('pass-input').value;
+    if (input === '2808') {
+      document.getElementById('lock-screen').style.display = 'none';
+      document.getElementById('main-content').style.display = 'block';
+      startTimer();
+    } else {
+      document.getElementById('error
+  
