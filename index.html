@@ -194,28 +194,39 @@
       margin-top: 10px;
     }
 
-    /* Papatya Falı Tasarımı */
-    .daisy-btn {
-      background: #ffffff;
-      border: 2px solid #f48fb1;
-      font-size: 3.5rem;
-      padding: 12px 20px;
-      border-radius: 50%;
+    /* SVG Papatya Tasarımı */
+    .daisy-container {
+      width: 140px;
+      height: 140px;
+      margin: 15px auto;
       cursor: pointer;
-      margin: 10px auto;
-      display: inline-block;
-      transition: transform 0.15s;
-      user-select: none;
     }
-    .daisy-btn:active {
-      transform: scale(0.85);
+
+    .petal {
+      fill: #ffffff;
+      stroke: #f48fb1;
+      stroke-width: 2;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      transform-origin: 100px 100px;
     }
+
+    .petal-hidden {
+      opacity: 0;
+      transform: scale(0.5);
+    }
+
+    .center-flower {
+      fill: #ffb74d;
+      stroke: #ffa726;
+      stroke-width: 2;
+    }
+
     #daisy-result {
       font-weight: bold;
       color: #e91e63;
-      font-size: 1.1rem;
+      font-size: 1.15rem;
       margin-top: 10px;
-      min-height: 30px;
+      min-height: 32px;
     }
 
     /* Zaman Kapsülü Kilitli Kart */
@@ -233,6 +244,40 @@
       color: #880e4f;
       margin-top: 8px;
       font-size: 0.9rem;
+    }
+
+    /* Modal (Mektup Penceresi) */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.5);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      padding: 20px;
+    }
+
+    .modal-content {
+      background: #fff;
+      padding: 24px;
+      border-radius: 20px;
+      max-width: 400px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    }
+
+    .modal-content input[type="text"] {
+      width: 100%;
+      padding: 10px 14px;
+      border: 2px solid #f8bbd0;
+      border-radius: 12px;
+      outline: none;
+      font-size: 0.95rem;
+      text-align: center;
+      margin: 12px 0;
     }
 
   </style>
@@ -262,7 +307,7 @@
       <h2>İyi ki Sen ❤️</h2>
       <p style="font-size: 0.85rem; margin-bottom: 8px;">28 Ağustos 22:05'ten beri seninle geçen süremiz:</p>
       <div class="timer-grid">
-        <div class="timer-box"><span id="days">6</span><small>Gün</small></div>
+        <div class="timer-box"><span id="days">0</span><small>Gün</small></div>
         <div class="timer-box"><span id="hours">0</span><small>Saat</small></div>
         <div class="timer-box"><span id="minutes">0</span><small>Dakika</small></div>
         <div class="timer-box"><span id="seconds">0</span><small>Saniye</small></div>
@@ -282,7 +327,17 @@
     <div class="card">
       <h2>Papatya Falı 🌼</h2>
       <p style="font-size: 0.85rem;">Papatyaya tıkla ve yaprakları koparmaya başla sevgilim! 😉</p>
-      <div class="daisy-btn" id="daisy-icon" onclick="pluckPetal()">🌼</div>
+      
+      <div class="daisy-container" onclick="pluckPetal()">
+        <svg viewBox="0 0 200 200" width="100%" height="100%">
+          <ellipse id="petal-1" class="petal" cx="100" cy="45" rx="14" ry="32" />
+          <ellipse id="petal-2" class="petal" cx="140" cy="60" rx="14" ry="32" transform="rotate(45 100 100)" />
+          <ellipse id="petal-3" class="petal" cx="155" cy="100" rx="14" ry="32" transform="rotate(90 100 100)" />
+          <ellipse id="petal-4" class="petal" cx="140" cy="140" rx="14" ry="32" transform="rotate(135 100 100)" />
+          <circle class="center-flower" cx="100" cy="100" r="28" />
+        </svg>
+      </div>
+
       <div id="daisy-result">Papatyaya dokun...</div>
     </div>
 
@@ -304,11 +359,11 @@
     </div>
 
     <div class="card">
-      <h2>Geleceğe Not / Zaman Kapsülü ⏳🔒</h2>
-      <div class="capsule-box" onclick="alert('🔒 Bu mektup kilitlidir!\n\nYalnızca 28 Ağustos 2027 tarihinde (1. Yıl Dönümümüzde) açılacaktır sevgilim... ❤️✨')">
+      <h2>Özel Mektup ⏳🔒</h2>
+      <div class="capsule-box" onclick="openCapsule()">
         <span style="font-size: 2.5rem;">✉️</span>
-        <p style="font-weight: bold; color: #ad1457; margin-top: 5px;">1. Yıl Mektubumuz</p>
-        <p style="font-size: 0.75rem; color: #888;">(Açmak için üzerine tıkla)</p>
+        <p style="font-weight: bold; color: #ad1457; margin-top: 5px;">Sana Bir Mektubum Var</p>
+        <p style="font-size: 0.75rem; color: #888;">(Okumak için üzerine tıkla)</p>
       </div>
     </div>
 
@@ -328,6 +383,18 @@
 
   </div>
 
+</div>
+
+<div class="modal-overlay" id="capsule-modal">
+  <div class="modal-content" id="modal-body-content">
+    <h2 id="modal-title">Özel Soru 🔐</h2>
+    <p id="modal-question-text" style="font-size: 0.95rem; line-height: 1.5; color: #4a4a4a; margin: 15px 0; font-weight: 600;">
+      Gerçek mutluluk ne?
+    </p>
+    <input type="text" id="answer-input" placeholder="Cevabın ne sevgilim?">
+    <button class="btn" onclick="checkSecretAnswer()">Gönder ❤️</button>
+    <p id="modal-error" style="color: #d32f2f; margin-top: 8px; font-size: 0.8rem; display: none;">Yanlış cevap sevgilim, tekrar düşün! 🙈</p>
+  </div>
 </div>
 
 <script>
@@ -371,45 +438,74 @@
     }, 1000);
   }
 
-  /* Papatya Falı Kodu */
-  let currentStep = 0;
-  let level = 0;
-
-  const loveLevels = [
-    "SEVİYOR! ❤️",
-    "ÇOK SEVİYOR! 💕",
-    "DÜNYALAR KADAR SEVİYOR! 🌍✨",
-    "EVREN KADAR SEVİYOR! 🌌💖",
-    "AŞKINDAN ÖLÜYOR! 🥳❤️🔥"
-  ];
+  /* YAPRAKLARI TEK TEK EKSİLEN PAPATYA FALI */
+  let step = 0;
 
   function pluckPetal() {
+    step++;
     const resultDiv = document.getElementById('daisy-result');
-    const icon = document.getElementById('daisy-icon');
-    
-    currentStep++;
 
-    if (currentStep === 1) {
+    if (step === 1) {
+      document.getElementById('petal-1').classList.add('petal-hidden');
       resultDiv.innerText = "Seviyor... 🌸";
-    } else if (currentStep === 2) {
+    } else if (step === 2) {
+      document.getElementById('petal-2').classList.add('petal-hidden');
       resultDiv.innerText = "Sevmiyor... 🙈";
-    } else if (currentStep === 3) {
+    } else if (step === 3) {
+      document.getElementById('petal-3').classList.add('petal-hidden');
       resultDiv.innerText = "Seviyor... 💖";
-    } else if (currentStep === 4) {
+    } else if (step === 4) {
+      document.getElementById('petal-4').classList.add('petal-hidden');
       resultDiv.innerText = "Sevmiyor... 💔";
-    } else if (currentStep === 5) {
-      resultDiv.innerText = "SONÇ: " + loveLevels[level];
+    } else if (step === 5) {
+      resultDiv.innerText = "AŞKINDAN ÖLÜYOR! 🥳❤️🔥";
       
-      if (level < loveLevels.length - 1) {
-        level++;
-      }
-      
-      currentStep = 0;
-      icon.innerText = "🌸";
-      setTimeout(() => { icon.innerText = "🌼"; }, 1000);
+      setTimeout(() => {
+        for (let i = 1; i <= 4; i++) {
+          document.getElementById('petal-' + i).classList.remove('petal-hidden');
+        }
+        resultDiv.innerText = "Papatya yenilendi! Dokun... 🌼";
+        step = 0;
+      }, 3000);
     }
+  }
+
+  /* ŞİFRELİ ÖZEL MEKTUP SİSTEMİ */
+  function openCapsule() {
+    const modal = document.getElementById('capsule-modal');
+    document.getElementById('modal-body-content').innerHTML = `
+      <h2 id="modal-title">Özel Soru 🔐</h2>
+      <p style="font-size: 0.95rem; line-height: 1.5; color: #4a4a4a; margin: 15px 0; font-weight: 600;">
+        Gerçek mutluluk ne?
+      </p>
+      <input type="text" id="answer-input" placeholder="Cevabın ne sevgilim?">
+      <button class="btn" onclick="checkSecretAnswer()">Gönder ❤️</button>
+      <p id="modal-error" style="color: #d32f2f; margin-top: 8px; font-size: 0.8rem; display: none;">Yanlış cevap sevgilim, tekrar düşün! 🙈</p>
+    `;
+    modal.style.display = "flex";
+  }
+
+  function checkSecretAnswer() {
+    const userAnswer = document.getElementById('answer-input').value.trim().toUpperCase();
+    
+    if (userAnswer === "SEDAT") {
+      document.getElementById('modal-body-content').innerHTML = `
+        <h2>Sevgilim, Sedat'ım... ❤️</h2>
+        <p style="font-size: 0.92rem; line-height: 1.6; color: #4a4a4a; margin: 15px 0; text-align: left;">
+          Şu an bu mektubu okurken yüzünde minik bir gülümseme olmasını hayal ediyorum. İyi ki hayatımdasın, iyi ki o güzel kalbinle yollarımız kesişti. Aradaki mesafeler ne kadar uzun olursa olsun, attığım her adımda, aldığım her nefeste aklımda ve kalbimde hep sen varsın. Seninle gülmek hayatımın en güzel hediyesi. Beni bu hayatta benden bile çok mutlu eden, kalbimin sahibi iyi ki varsın. Seni her şeyden çok seviyorum, bir ömür boyu seni hiç bırakmayacağım sevgilim... 🌹✨
+        </p>
+        <button class="btn" onclick="closeCapsule()">Kapat</button>
+      `;
+    } else {
+      document.getElementById('modal-error').style.display = "block";
+    }
+  }
+
+  function closeCapsule() {
+    document.getElementById('capsule-modal').style.display = "none";
   }
 </script>
 
 </body>
-</html>
+  </html>
+  
